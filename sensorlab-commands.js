@@ -99,12 +99,13 @@ var factory = function(host, port, promise){
             },
             /**
              * load a firmware in the observer's node
+             * @param {String} firmwareId
              * @param {File} firmware
              * @param {onSuccessCallback} onSuccess
              * @param {onErrorCallback} onError
              */
-            load: function (firmware, onSuccess, onError) {
-                partials.node('load', onSuccess, onError, {'firmware': firmware})
+            load: function (firmwareId, firmware, onSuccess, onError) {
+                partials.node('load', onSuccess, onError, {'firmware_id': firmwareId, 'firmware': firmware})
             },
             /**
              * start the observer's node module
