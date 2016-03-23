@@ -315,14 +315,16 @@ var factory = function(host, port, promise){
             },
             /**
              * load a firmware in the observer's node
+             * @parma {String} firmwareId
              * @param {File} firmware
              * @returns {Promise} the request's promise
              */
-            load: function (firmware) {
+            load: function (firmwareId, firmware) {
                 var deferred;
 
                 deferred = Q.defer();
                 commands.node.load(
+                    firmwareId,
                     firmware,
                     onSuccessWithPromise.bind(null, deferred),
                     onErrorWithPromise.bind(null, deferred)
