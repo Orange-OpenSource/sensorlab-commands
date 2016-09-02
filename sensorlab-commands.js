@@ -216,19 +216,15 @@ var factory = function(host, port, promise){
         io: {
             /**
              * setup the observer's experiment module
-             * @param {(String)} source
              * @param {(String)} address
              * @param {(number|String)} port
-             * @param {(number|String)} keepalivePeriod
              * @param {onSuccessCallback} onSuccess
              * @param {onErrorCallback} onError
              */
-            setup: function (source, address, port, keepalivePeriod, onSuccess, onError) {
+            setup: function (address, port, onSuccess, onError) {
                 partials.io('setup', onSuccess, onError, {
-                    'source': source,
                     'address': address,
                     'port': port,
-                    'keepalive_period': keepalivePeriod
                 }, onSuccess, onError);
             },
             /**
@@ -517,21 +513,17 @@ var factory = function(host, port, promise){
         io: {
             /**
              * setup the observer's experiment module
-             * @param {(String)} source
              * @param {(String)} address
              * @param {(number|String)} port
-             * @param {(number|String)} keepalivePeriod
              * @returns {Promise} the request's promise
              */
-            setup: function (source, address, port, keepalivePeriod) {
+            setup: function (address, port) {
                 var deferred;
 
                 deferred = Q.defer();
                 commands.io.setup(
-                    source,
                     address,
                     port,
-                    keepalivePeriod,
                     onSuccessWithPromise.bind(null, deferred),
                     onErrorWithPromise.bind(null, deferred)
                 );
