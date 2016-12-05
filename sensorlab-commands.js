@@ -65,7 +65,8 @@ var factory = function(host, port, promise){
         node: generic.bind(null, 'node'),
         experiment: generic.bind(null, 'experiment'),
         location: generic.bind(null, 'location'),
-        io: generic.bind(null, 'io')
+        io: generic.bind(null, 'io'),
+        system: generic.bind(null, 'system')
     };
 
     commands = {
@@ -250,6 +251,22 @@ var factory = function(host, port, promise){
              */
             status: function (onSuccess, onError) {
                 partials.io('status', onSuccess, onError);
+            }
+        },
+        system: {
+            version: function (onSuccess, onError) {
+                partials.system('version', onSuccess, onError);
+            },
+            synchronization: function (onSuccess, onError) {
+                partials.system('synchronization', onSuccess, onError);
+            },
+            /**
+             * request the observer's system module status
+             * @param {onSuccessCallback} onSuccess
+             * @param {onErrorCallback} onError
+             */
+            status: function (onSuccess, onError) {
+                partials.system('status', onSuccess, onError);
             }
         }
     };
@@ -566,6 +583,50 @@ var factory = function(host, port, promise){
 
                 deferred = Q.defer();
                 commands.io.status(
+                    onSuccessWithPromise.bind(null, deferred),
+                    onErrorWithPromise.bind(null, deferred)
+                );
+                return deferred.promise;
+            }
+        },
+        system: {
+            /**
+             * request the observer's IO module status
+             * @returns {Promise} the request's promise
+             */
+            version: function () {
+                var deferred;
+
+                deferred = Q.defer();
+                commands.system.version(
+                    onSuccessWithPromise.bind(null, deferred),
+                    onErrorWithPromise.bind(null, deferred)
+                );
+                return deferred.promise;
+            },
+            /**
+             * request the observer's IO module status
+             * @returns {Promise} the request's promise
+             */
+            synchronization: function () {
+                var deferred;
+
+                deferred = Q.defer();
+                commands.system.synchronization(
+                    onSuccessWithPromise.bind(null, deferred),
+                    onErrorWithPromise.bind(null, deferred)
+                );
+                return deferred.promise;
+            },
+            /**
+             * request the observer's IO module status
+             * @returns {Promise} the request's promise
+             */
+            status: function () {
+                var deferred;
+
+                deferred = Q.defer();
+                commands.system.status(
                     onSuccessWithPromise.bind(null, deferred),
                     onErrorWithPromise.bind(null, deferred)
                 );
