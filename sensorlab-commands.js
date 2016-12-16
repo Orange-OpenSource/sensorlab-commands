@@ -254,14 +254,32 @@ var factory = function(host, port, promise){
             }
         },
         system: {
+            /**
+             * request the observer's system version
+             * @param {onSuccessCallback} onSuccess
+             * @param {onErrorCallback} onError
+             */
             version: function (onSuccess, onError) {
                 partials.system('version', onSuccess, onError);
             },
+            /**
+             * request the observer's system synchronization details
+             * @param {onSuccessCallback} onSuccess
+             * @param {onErrorCallback} onError
+             */
             synchronization: function (onSuccess, onError) {
                 partials.system('synchronization', onSuccess, onError);
             },
             /**
-             * request the observer's system module status
+             * request the observer's system logs
+             * @param {onSuccessCallback} onSuccess
+             * @param {onErrorCallback} onError
+             */
+            log: function (onSuccess, onError) {
+                partials.system('log', onSuccess, onError);
+            },
+            /**
+             * request the observer's system status
              * @param {onSuccessCallback} onSuccess
              * @param {onErrorCallback} onError
              */
@@ -613,6 +631,20 @@ var factory = function(host, port, promise){
 
                 deferred = Q.defer();
                 commands.system.synchronization(
+                    onSuccessWithPromise.bind(null, deferred),
+                    onErrorWithPromise.bind(null, deferred)
+                );
+                return deferred.promise;
+            },
+            /**
+             * request the observer's IO module status
+             * @returns {Promise} the request's promise
+             */
+            log: function () {
+                var deferred;
+
+                deferred = Q.defer();
+                commands.system.log(
                     onSuccessWithPromise.bind(null, deferred),
                     onErrorWithPromise.bind(null, deferred)
                 );
