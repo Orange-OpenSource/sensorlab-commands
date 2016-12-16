@@ -275,8 +275,8 @@ var factory = function(host, port, promise){
              * @param {onSuccessCallback} onSuccess
              * @param {onErrorCallback} onError
              */
-            log: function (onSuccess, onError) {
-                partials.system('log', onSuccess, onError);
+            log: function (since, onSuccess, onError) {
+                partials.system('log', onSuccess, onError, {'since': since});
             },
             /**
              * request the observer's system status
@@ -638,13 +638,15 @@ var factory = function(host, port, promise){
             },
             /**
              * request the observer's IO module status
+             * @param {String} the since string, as in journalctl format
              * @returns {Promise} the request's promise
              */
-            log: function () {
+            log: function (since) {
                 var deferred;
 
                 deferred = Q.defer();
                 commands.system.log(
+                    since,
                     onSuccessWithPromise.bind(null, deferred),
                     onErrorWithPromise.bind(null, deferred)
                 );
